@@ -1,17 +1,22 @@
 import sys
 
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMainWindow
-from PyQt5 import uic
-from PyQt5.QtGui import QPainter, QPixmap, QPen, QColor, QPolygon
-from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
+from PyQt5.QtGui import QPainter, QColor
 from random import choice, randint
 
 
 class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setGeometry(800, 500, 1149, 794)
+        self.setWindowTitle('Жёлтые круги')
         self.draw = False
+        self.colors = ['Red', 'Orange', 'Yellow', 'Green', 'Cyan',
+                       'Blue', 'Magenta', 'Purple', 'Brown']
+
+        self.pushButton = QPushButton('Кнопка', self)
+        self.pushButton.resize(50, 50)
+        self.pushButton.move(140, 140)
         self.pushButton.clicked.connect(self.makeflag)
 
     def makeflag(self):
@@ -22,9 +27,8 @@ class MyWidget(QMainWindow):
         if self.draw:
             qp = QPainter()
             qp.begin(self)
-            qp.setBrush(QColor('Yellow'))
-
             for i in range(6):
+                qp.setBrush(QColor(choice(self.colors)))
                 radius = randint(20, 200)
                 self.x = randint(20, 1000)
                 self.y = randint(20, 700)
